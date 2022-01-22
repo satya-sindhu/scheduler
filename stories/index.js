@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 import React from "react";
 
 import { storiesOf } from "@storybook/react";
@@ -17,6 +18,7 @@ import Show from "components/Appointment/Show.js";
 import Confirm from "components/Confirm.js";
 import Status from "components/Appointment/Status.js";
 import Error from "components/Appointment/Error.js";
+import Form from "components/Appointment/Form";
 
 storiesOf("Button", module)
   .addParameters({
@@ -157,3 +159,5 @@ storiesOf("Appointment", module)
   .add("Confirm",() => <Confirm onConfirm={action("onConfirm")} onCancel={action("onCancel")}/>)
   .add("Status",() => <Status message={action("Deleting")}/>)
   .add("Error",() => <Error message={action("Could not delete appointment")} onClose={action("onClose")}/>)
+  .add("Edit",() => <Form onSave={action("onSave")} onCancel={action("onCancel")} student={"sylvia palmer"} interviewers={interviewers} interviewer={1} />)
+  .add("Create",() => <Form onSave={action("onSave")} onCancel={action("onCancel")} interviewers={interviewers} />)
