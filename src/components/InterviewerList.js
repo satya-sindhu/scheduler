@@ -10,7 +10,7 @@ import InterviewerListItem from "./InterviewerListItem";
         name={interviewer.name}
         avatar={interviewer.avatar}
         selected={interviewer.id === props.value}
-        setInterviewer={() => onchange(interviewer.id)}
+        setInterviewer={() => props.onchange(interviewer.id)}
       />
     );
   });
