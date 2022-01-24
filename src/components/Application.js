@@ -1,15 +1,10 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/jsx-no-undef */
-import React, { useState } from "react";
-
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "components/Application.scss";
-
 import DayList from "./DayList";
 import Appointment from "components/Appointment";
-
-
-
 
 const days = [
   {
@@ -31,6 +26,7 @@ const days = [
 
 export default function Application(props) {
   const [day, setDay] = useState("Monday");
+  const [days, setDays] = useState([]);
   const appointment = { id: 1, interview: null, time: "sunday" }
   const appointments = [
     {
@@ -70,6 +66,14 @@ export default function Application(props) {
       time: "4pm",
     }
   ];
+
+
+  useEffect(() => {
+    axios.get(`/api/days`).then((response) => {
+      setDay(response.data);
+    });
+  }, []);
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -90,13 +94,9 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
         <Appointment key="last" time="5pm" />
-        {/* Replace this with the sidebar elements during the "Project Setup & Familiarity" activity. */}
       </section>
       <section className="schedule">
         {appointments.map(appointment => <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={appointment.interview} />)}
-        {/* <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={appointment.interview} />
-        <Appointment key={appointment.id} {...appointment} /> */}
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
       </section>
     </main>
   );
