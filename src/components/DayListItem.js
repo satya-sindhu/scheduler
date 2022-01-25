@@ -2,7 +2,6 @@ import React from "react";
 import "./DayListItem.scss";
 
 export default function DayListItem(props) {
-    console.log(props);
     function formatSpots(spots) {
         if (spots === 0) {
             return "no spots remaining";
