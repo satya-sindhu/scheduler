@@ -11,6 +11,7 @@ import Confirm from "components/Confirm.js";
 import Status from "components/Appointment/Status.js";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "components/Appointment/Form.js";
+import Error from "./Error";
 
 
 const EMPTY = "EMPTY";
@@ -20,6 +21,8 @@ const SAVING = 'SAVING';
 const DELETING = 'DELETING';
 const CONFIRM = 'CONFIRM';
 const EDIT = "EDIT";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
     console.log(props);
@@ -49,12 +52,13 @@ export default function Appointment(props) {
             student: name,
             interviewer,
         };
-        transition(SAVING)
-        props.bookInterview(props.id, newInterview)
-            .then(() => {
-                transition(SHOW);
 
-            })
+        transition(SAVING)
+        // props.bookInterview(props.id, newInterview)
+        props
+            .bookInterview(props.id, newInterview)
+            .then(() => transition(SHOW))
+            .catch((error) => transition(ERROR_SAVE, true));
 
     };
 
@@ -64,13 +68,14 @@ export default function Appointment(props) {
 
 
     const deleteAppointment = () => {
-        transition(DELETING);
+        transition(DELETING, true);
         props.cancelInterview(props.id)
             .then(() => {
-                transition(EMPTY);
+                transition(EMPTY)
+
 
             })
-
+            .catch((error) => transition(ERROR_DELETE, true));
     };
     console.log('props.interview', props.interview);
 
@@ -113,6 +118,15 @@ export default function Appointment(props) {
                     // onCancel={back}
                     onConfirm={() => deleteAppointment()}
                 />
+            )}
+            {mode === ERROR_SAVE && (
+                <Error
+                    message="Could not save appointment."
+                    onClose={() => back(SHOW)}
+                />
+            )}
+            {mode === ERROR_DELETE && (
+                <Error message="Could not save appointment." onClose={() => back()} />
             )}
 
         </article>

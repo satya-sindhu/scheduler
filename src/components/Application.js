@@ -116,9 +116,9 @@ const Application = (props) => {
       .then((res) => {
         setState({ ...state, appointments });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
   const cancelInterview = (id) => {
@@ -136,9 +136,9 @@ const Application = (props) => {
       .then((res) => {
         setState({ ...state, appointments });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   };
 
 
