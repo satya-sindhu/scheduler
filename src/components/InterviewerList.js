@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import React from "react";
-import  "components/InterviewerList.scss";
+import "components/InterviewerList.scss";
 import InterviewerListItem from "./InterviewerListItem";
- export default function InterviewerList (props){
+export default function InterviewerList(props) {
   const interviewers = props.interviewers.map((interviewer) => {
     return (
       <InterviewerListItem
@@ -10,16 +10,16 @@ import InterviewerListItem from "./InterviewerListItem";
         name={interviewer.name}
         avatar={interviewer.avatar}
         selected={interviewer.id === props.value}
-        setInterviewer={() => props.onchange(interviewer.id)}
+        setInterviewer={() => props.onChange(interviewer.id)}
       />
     );
   });
-return(
-  <section className="interviewers">  
-  <h4 className="interviewers__header text--light">Interviewers</h4>
-    <ul className="interviewers__list">
-      {interviewers}  
-  </ul>
-  </section>
-)
+  return (
+    <section className="interviewers">
+      <h4 className="interviewers__header text--light">Interviewers</h4>
+      <ul className="interviewers__list">
+        {interviewers}
+      </ul>
+    </section>
+  )
 }

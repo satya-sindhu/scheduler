@@ -70,13 +70,12 @@ const Application = (props) => {
     appointments: {},
     interviewers: {}
   })
-
+  const interviewers = getInterviewersForDay(state, state.day);
+  console.log('interviewers', interviewers);
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
   const setDays = (days) => {
     setState((prev) => ({ ...prev, days }));
-    const interviewers = getInterviewersForDay(state, state.day);
-
   }
   useEffect(() => {
     const baseURL = "http://localhost:8001"
@@ -93,6 +92,27 @@ const Application = (props) => {
         }));
       });
   }, []);
+
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+
+    setState((prev) => ({
+      ...prev,
+      appointments: appointments
+    }));
+    return axios.put(`/api/appointments/${id}`, appointment)
+  };
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -123,6 +143,7 @@ const Application = (props) => {
             time={appointment.time}
             interview={appointment.interview}
             interviewers={interviewers}
+            bookInterview={bookInterview}
           />
         ))}
         <Appointment key='last' time='5pm' />
