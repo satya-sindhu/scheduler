@@ -36,12 +36,13 @@ const useApplicationData = () => {
             ...state.appointments,
             [id]: appointment,
         };
+        updateSpots(state, appointments, id);
+
         return axios
             .put(`/api/appointments/${id}`, appointment)
             .then((res) => {
                 setState({ ...state, appointments });
             })
-
     };
 
     const cancelInterview = (id) => {
@@ -53,14 +54,28 @@ const useApplicationData = () => {
             ...state.appointments,
             [id]: appointment
         };
-
+        updateSpots(state, appointments);
         return axios
             .delete(`/api/appointments/${id}`)
             .then((res) => {
                 setState({ ...state, appointments });
+
             })
 
-    };
+    }
+
+    function updateSpots(state, appointments) {
+        let totalSpots = 0;
+        for (let currentday of state.days) {
+            if (currentday.name === state.day) {
+                for (let currentappt of currentday.appointments) {
+                    const matchedAppt = appointments[currentappt];
+                    if (matchedAppt.interview === null) ++totalSpots;
+                }
+                currentday.spots = totalSpots;
+            }
+        }
+    }
     return {
         state,
         setDay,
