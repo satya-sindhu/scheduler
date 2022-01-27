@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 
 export default function Form(props) {
-  const [student, setStudent] = useState(props.student || "");
+  const [student, setStudent] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
@@ -29,7 +29,7 @@ export default function Form(props) {
     }
     props.onSave(student, interviewer);
   }
-
+  console.log("student", student);
 
   return (
     <main className="appointment__card appointment__card--create">
