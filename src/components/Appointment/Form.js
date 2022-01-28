@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 
 export default function Form(props) {
-  const [student, setStudent] = useState(props.name || "");
+  const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   const [error, setError] = useState("");
 
@@ -15,6 +15,7 @@ export default function Form(props) {
     setInterviewer("")
     props.onCancel();
   }
+  console.log("props.student", props.student);
 
   const submit = () => {
     props.onSave(student, interviewer);
